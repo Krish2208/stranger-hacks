@@ -16,18 +16,23 @@
       crossorigin="anonymous"
     ></script>
     <title>Blind</title>
-    <style>
+    <!--<style>
       body {
         background-color: rgb(0, 0, 0);
         color: white;
       }
-    body {
-      min-height:100%;
-      background:linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(./bg.webp);
-      background-size:cover;
-    }
-    #uploader {
-        border: 3px dashed #8C8C8C;
+      body {
+        min-height: 100%;
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8)
+          ),
+          url(./bg.webp);
+        background-size: cover;
+      }
+      #uploader {
+        border: 3px dashed #8c8c8c;
         border-radius: 10px;
         width: 500px;
         height: 200px;
@@ -36,27 +41,26 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        color: #8C8C8C;
+        color: #8c8c8c;
         cursor: pointer;
       }
-      
+
       #uploader:hover {
-        border: 3px dashed #FFFFFF;
-        color: #FFFFFF;
+        border: 3px dashed #ffffff;
+        color: #ffffff;
       }
-      
+
       #uploader input[type="file"] {
         display: none;
       }
-      
+
       #preview {
         margin-top: 50px;
         width: 500px;
         height: 500px;
         object-fit: contain;
       }
-
-    </style>
+    </style>-->
   </head>
   <body style="overflow-x: hidden">
     <div>
@@ -74,39 +78,41 @@
       </div>
     </div>
     <div class="container">
-        <div class="row">
-            <h2 class="text-center my-4">Name of our project:</h2>
+      <div class="row">
+        <h2 class="text-center my-4">Name of our project:</h2>
+      </div>
+      <h5 class="text-center">Blind</h5>
+      <div class="row" style="height: 100px">
+        <div id="uploader" class="col">
+          <form action='/blind' method='post' enctype="multipart/form-data">
+            <label for="image">Click here to upload an image</label>
+            <input type="file" id="file" name="image" />
+            <br />
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
         </div>
-        <h5 class="text-center">
-              Blind
-        </h5>
-         <div class="row" style="height: 100px;">
-            <div id="uploader" class="col">
-      <label for="file">Click here to upload an image</label>
-      <input type="file" id="file">
-    </div>
-    <div class="col"><img id="preview" src=""></div>
-         </div>
-    
-    <script>
-      const uploader = document.getElementById('uploader');
-      const fileInput = document.getElementById('file');
-      const preview = document.getElementById('preview');
-      
-      uploader.addEventListener('click', () => {
-        fileInput.click();
-      });
-      
-      fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          preview.src = reader.result;
-        }
-        reader.readAsDataURL(file);
-      });
-    </script>
+        <div class="col"><img id="preview" src="" /></div>
+      </div>
 
+      <script>
+        const uploader = document.getElementById("uploader");
+        const fileInput = document.getElementById("file");
+        const preview = document.getElementById("preview");
+
+        uploader.addEventListener("click", () => {
+          fileInput.click();
+        });
+
+        fileInput.addEventListener("change", () => {
+          const file = fileInput.files[0];
+          const reader = new FileReader();
+          reader.onload = () => {
+            preview.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      </script>
     </div>
   </body>
 </html>
