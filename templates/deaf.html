@@ -81,10 +81,13 @@
         <h2 class="text-center my-4">Sense Assist</h2>
       </div>
       <h5 class="text-center">Deaf</h5>
-      <div class="m-auto text-center" >
+      <div class="m-auto text-center">
         <div id="recorder" class="m-auto py-5">
-          <label for="audio-file">Click here to record an audio file</label>
-          <input type="file" accept="audio/*" id="audio-file" />
+          <form action="/deaf" method="POST" enctype="multipart/form-data">
+            <label for="audio-file">Click here to record an audio file</label>
+            <input type="file" accept="audio/*" id="audio-file" name="audio"/>
+            <input type="submit" value="Submit" />
+          </form>
         </div>
         <audio id="audio" src="" controls></audio>
 
