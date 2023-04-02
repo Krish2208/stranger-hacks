@@ -42,14 +42,13 @@ def ren_mute():
 @app.route('/blind', methods=['POST'])
 def blind():
     file = request.files['image']
-    with open('static/image.pkl', 'wb') as f:
-        d = pickle.dump(file,f)
-    d = pickle.load(f)
-    image = Image.open(d)
+    image = Image.open(file.stream)
     inputs = processor(image, return_tensors="pt")
     out = model.generate(**inputs)
     text = processor.decode(out[0] , skip_special_tokens=True)
-    return url_for(redirect('result_blind.html', text=text))
+    audio = gTTS(text)
+    audio.save('static/audio.mp3')
+    return render_template('result_blind.html')
 
 @app.route('/deaf', methods=['POST'])
 def deaf():
