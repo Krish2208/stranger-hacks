@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 
+from gtts import gTTS
 import requests
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
@@ -41,8 +42,10 @@ def ren_mute():
 @app.route('/blind', methods=['POST'])
 def blind():
     file = request.files['image']
-    print(type(file))
-    image = Image.open(request.files['image'])
+    with open('static/image.pkl', 'wb') as f:
+        d = pickle.dump(file,f)
+    d = pickle.load(f)
+    image = Image.open(d)
     inputs = processor(image, return_tensors="pt")
     out = model.generate(**inputs)
     text = processor.decode(out[0] , skip_special_tokens=True)
@@ -55,10 +58,13 @@ def deaf():
     text = whis_model.transcribe(audio)
     return url_for(redirect('result_deaf.html', text=text))
 
-@app.route('/dumb', methods=['POST'])
+@app.route('/mute', methods=['GET', 'POST'])
 def dumb():
+    print(request.form)
     text = request.form['text']
-    return url_for(redirect('result_mute.html', text=text))
+    audio = gTTS(text)
+    audio.save('static/audio.mp3')
+    return render_template('result_mute.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
